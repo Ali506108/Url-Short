@@ -1,0 +1,53 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all                        # ensure full commit
+      retries: 5                       # retry logic for failure recovery
+      compression-type: snappy        # faster and compact
+      batch-size: 16384               # buffer batching (16 KB)
+      linger-ms: 5                    # delay to allow batching
+    consumer:
+      group-id: url-shortener-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+        max.poll.records: 500
+
+    listener:
+      ack-mode: manual_immediate
+      concurrency: 16
+    template:
+      default-topic: url-events
+  data:
+    mongodb:
+      uri: mongodb\://localhost\:27017/mongo
+      username: root
+      password: root
+      auto-index-creation: true
+  application:
+    name: URL-Shortening-Service
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+logging:
+  level:
+    org.apache.kafka: WARN
+    org.springframework.kafka: info
