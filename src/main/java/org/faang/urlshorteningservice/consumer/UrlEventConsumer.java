@@ -24,4 +24,11 @@ public class UrlEventConsumer {
             log.error("Error while consuming URL event", e);
         }
     }
+
+
+
+    @KafkaListener(topics = "dlq-url-topic" ,groupId = "dlq-consumer")
+    public void handleDLQ(Url url) {
+        log.warn("Received DLQ event: {}", url);
+    }
 }

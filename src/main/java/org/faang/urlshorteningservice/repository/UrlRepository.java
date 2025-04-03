@@ -13,4 +13,6 @@ public interface UrlRepository extends ReactiveMongoRepository<Url, String> {
     Mono<Url> findByUrl(String shortUrl);
 
     Mono<Url> findByShortUrl(String shortUrl);
+
+    boolean existsByShortUrl(String shortUrl);
 }

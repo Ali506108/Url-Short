@@ -19,6 +19,26 @@ repositories {
 
 dependencies {
 
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.opentelemetry:opentelemetry-api:1.34.1'
+    implementation 'io.opentelemetry:opentelemetry-sdk:1.34.1'
+    implementation 'io.opentelemetry:opentelemetry-exporter-jaeger:1.34.1'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp:1.34.1'
+
+
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('io.opentelemetry:opentelemetry-api:1.34.1')
+    implementation('io.opentelemetry:opentelemetry-sdk:1.34.1')
+    implementation('io.opentelemetry:opentelemetry-exporter-otlp:1.34.1')
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+
+    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.108.Final:osx-aarch_64")
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
