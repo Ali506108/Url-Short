@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Simple CI
 
 on:
   push:
@@ -9,31 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
-    services:
-      mongodb:
-        image: mongo
-        ports:
-          - 27017:27017
-
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-
-      zookeeper:
-        image: wurstmeister/zookeeper
-        ports:
-          - 2181:2181
-
-      kafka:
-        image: wurstmeister/kafka
-        ports:
-          - 9092:9092
-        env:
-          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-          KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
 
     steps:
       - name: Checkout code
@@ -48,14 +23,5 @@ jobs:
       - name: Grant permission to Gradle wrapper
         run: chmod +x gradlew
 
-      - name: Build the project
+      - name: Build and Test
         run: ./gradlew clean build --info --stacktrace
-
-      - name: Ensure test report directory exists
-        run: mkdir -p build/reports/tests/test
-
-      - name: Upload Test Reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-report
-          path: build/reports/tests/test
